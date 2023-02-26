@@ -17,7 +17,7 @@ public class TestAccount {
     }
 
     @Test
-    public void givenCorrectAmount_whenWithdraw_thenSucceed() throws AccountInsufficientBalance, AccountWithdrawLimitException {
+    public void givenCorrectAmount_whenWithdraw_thenSucceed() throws AccountInsufficientBalance, AccountWithdrawLimitException{
 
         account1.withdraw(1200);
 
