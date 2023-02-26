@@ -3,7 +3,6 @@ package model;
 import enums.Bills;
 import exception.ATMInsufficientBalance;
 import exception.ATMWithdrawLimitException;
-import exception.InvalidDepositAmountException;
 
 public class ATM {
     private double balance = 0;
@@ -11,8 +10,8 @@ public class ATM {
     private int num200Bills = 0;
     private int num100Bills = 0;
 
-    public ATM(double balance, int num200Bills, int num100Bills) {
-        this.balance = balance;
+    public ATM(int num200Bills, int num100Bills) {
+        this.balance = num200Bills * Bills.BILL_200.getValue() + num100Bills * Bills.BILL_100.getValue();
         this.num200Bills = num200Bills;
         this.num100Bills = num100Bills;
     }
@@ -54,11 +53,8 @@ public class ATM {
         System.out.println("Dispensing " + num200BillsNeeded + " " + Bills.BILL_200.name() + " bills and " + num100BillsNeeded + " " + Bills.BILL_100.name() + " bills");
     }
 
-    public void deposit(double amount, int num200Bills, int num100Bills) throws InvalidDepositAmountException {
+    public void deposit(int num200Bills, int num100Bills){
         double depositedAmount = num200Bills * Bills.BILL_200.getValue() + num100Bills * Bills.BILL_100.getValue();
-        if (depositedAmount != amount) {
-            throw new InvalidDepositAmountException("Deposited amount does not match the value of the deposited bills");
-        }
         balance += depositedAmount;
         this.num200Bills += num200Bills;
         this.num100Bills += num100Bills;

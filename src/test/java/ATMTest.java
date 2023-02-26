@@ -1,6 +1,5 @@
 import exception.ATMInsufficientBalance;
 import exception.ATMWithdrawLimitException;
-import exception.InvalidDepositAmountException;
 import model.ATM;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,7 +9,7 @@ public class ATMTest {
 
     @BeforeEach
     void setUp() {
-        atm = new ATM(10000, 20, 50);
+        atm = new ATM(20, 50);
     }
 
     @Test
@@ -39,26 +38,17 @@ public class ATMTest {
     }
 
     @Test
-    public void givenValidDepositAmount_whenDeposit_thenSucceed() throws InvalidDepositAmountException {
+    public void givenValidDepositAmount_whenDeposit_thenSucceed() {
         double depositAmount = 1200;
         int num200Bills = 3;
         int num100Bills = 6;
         double initialBalance = atm.getBalance();
 
-        atm.deposit(depositAmount, num200Bills, num100Bills);
+        atm.deposit( num200Bills, num100Bills);
 
         double expectedBalance = initialBalance + depositAmount;
         Assertions.assertEquals(expectedBalance, atm.getBalance());
         Assertions.assertEquals(23, atm.getNum200Bills());
         Assertions.assertEquals(56, atm.getNum100Bills());
-    }
-
-    @Test
-    public void givenInvalidDepositAmount_whenDeposit_thenThrowInvalidDepositAmountException() {
-        double depositAmount = 1500;
-        int num200Bills = 3;
-        int num100Bills = 5;
-
-        Assertions.assertThrows(InvalidDepositAmountException.class, () -> atm.deposit(depositAmount, num200Bills, num100Bills));
     }
 }
